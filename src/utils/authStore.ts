@@ -11,7 +11,11 @@ type User={
         winRate: number;
     }
 }
-export const useAuthStore=create((set)=>({
+type AuthStore={
+    user:User|null,
+    setUser:(user:User|null)=>void
+}
+export const useAuthStore=create<AuthStore>((set)=>({
     user:null,
-    setUser:(user:User)=>set({user})
+    setUser:(user)=>set({user})
 }))
