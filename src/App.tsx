@@ -3,6 +3,7 @@ import Body from "./components/Body"
 import { useEffect } from "react"
 import { useAuthStore } from "./utils/authStore"
 import axios from "axios"
+import Login from "./components/Login"
 
 const App = () => {
   const setUser=useAuthStore(state=>state.setUser)
@@ -11,7 +12,7 @@ const App = () => {
     if(!loggedinUser){
       const apiUrl = import.meta.env.VITE_BASE_URL;
       const user=await axios.get(`${apiUrl}/user/profile`,{withCredentials:true})
-      setUser(user.data.data)
+      setUser(user.data.data.safeUser)
     }    
   }
   useEffect(()=>{
@@ -21,9 +22,8 @@ const App = () => {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Body/>}>
-
-          </Route>
+          <Route path="/" element={<Body/>}/>
+          <Route path="/login" element={<Login/>}/>
         </Routes>  
       </BrowserRouter>
     </div>

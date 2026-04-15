@@ -5,6 +5,7 @@ import AnimatedBackground from "../ui/pathDrawing"
 const Body = () => {
     const navigate=useNavigate()
     const user=useAuthStore(state=>state.user)
+    console.log(user)
     const [playChoices,setPlayChoices]=useState(false)
     const handlePlay=()=>{
         if(!user){
