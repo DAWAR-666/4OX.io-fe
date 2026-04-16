@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { useAuthStore } from "../utils/authStore"
 import { useState } from "react"
 import AnimatedBackground from "../ui/pathDrawing"
+import Header from "./Header"
 const Body = () => {
     const navigate=useNavigate()
     const user=useAuthStore(state=>state.user)
@@ -19,6 +20,7 @@ const Body = () => {
     
     <div className="bg-black/70 w-screen min-h-screen overflow-hidden ">
         <AnimatedBackground/>
+        {user&&<Header/>}
         <div className="h-screen flex justify-center items-center z-1 ">
             <div className="flex flex-col bg-black/50 text-white p-30">
                 <span className="text-7xl md:text-8xl lg:text-9xl font-extrabold animate-fade-in ">
