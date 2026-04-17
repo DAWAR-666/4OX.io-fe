@@ -16,16 +16,15 @@ const Login = () => {
             
             const response=await axios.post(`${apiUrl}/auth/login`,{userName,password},{withCredentials:true})
             
-            setUser(response.data.data.safeUser)
+            setUser(response.data.data)
         }
         else{
             const response=await axios.post(`${apiUrl}/auth/signUp`,{userName,email,password},{withCredentials:true})
-            setUser(response.data.data.safeUser)
+            setUser(response.data.data)
         }
     navigate("/")}catch (err:any){
             const errorMessage = err.response?.data?.message || "Something went wrong";
             toast(errorMessage)
-    console.error("Backend Error:", errorMessage);
         }
         
     }
