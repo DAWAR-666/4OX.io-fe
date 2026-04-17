@@ -4,6 +4,7 @@ import { useState } from "react"
 import AnimatedBackground from "../ui/pathDrawing"
 import Header from "./Header"
 import LoadingDots from "../ui/loadingDots"
+import toast from "react-hot-toast"
 
 const Body = () => {
     const navigate=useNavigate()
@@ -26,9 +27,13 @@ const Body = () => {
         setJoin(true)
     }
     const handleJoinTwo=()=>{
-        setPlayChoices(false)
-        setJoin(false)
-        setLoading(true)
+        if(roomId.length==6){
+            setPlayChoices(false)
+            setJoin(false)
+            setLoading(true)
+        }
+        toast.error('INVALID ROOM ID',{className:'font-extrabold'})
+        
     }
     const handleBack=()=>{
         if(join){

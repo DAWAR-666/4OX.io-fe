@@ -17,14 +17,17 @@ const Login = () => {
             const response=await axios.post(`${apiUrl}/auth/login`,{userName,password},{withCredentials:true})
             
             setUser(response.data.data)
+            toast.success('Welcome Back!',{className:'font-extrabold'})
         }
         else{
             const response=await axios.post(`${apiUrl}/auth/signUp`,{userName,email,password},{withCredentials:true})
             setUser(response.data.data)
+            toast.success('Registration Completed! Welcome!',{className:'font-extrabold'})
+
         }
     navigate("/")}catch (err:any){
             const errorMessage = err.response?.data?.message || "Something went wrong";
-            toast(errorMessage)
+            toast.error(errorMessage,{className:'font-extrabold'})
         }
         
     }
