@@ -49,6 +49,7 @@ const Body = () => {
                 const response=await axios.post(`${apiUrl}/room/join`,{roomId},{withCredentials:true})
                 setRoom(response.data.data)
                 navigate(`/${roomId}`)
+                toast.success('Room Joined')
             }
         }catch(err:any){
             const errorMessage = err.response?.data?.message || "Something went wrong";
@@ -75,6 +76,22 @@ const Body = () => {
             setPlayChoices(false)
         }
         
+    }
+    const handleCreate=async()=>{
+        try{
+            setPlayChoices(false)
+            setLoading(true)
+            const response=await axios.post(`${apiUrl}/room/create`,{},{withCredentials:true})
+            setRoom(response.data.data)
+            const roomId=response.data.data.roomId
+            navigate(`/${roomId}`)
+            toast.success('Room created '+roomId,{className:'font-extrabold'})
+        }catch(err:any){
+            const errorMessage = err.response?.data?.message || "Something went wrong";
+            toast.error(errorMessage,{className:'font-extrabold'})
+        }finally{
+            setLoading(false)
+        }
     }
     return (
     
@@ -107,6 +124,7 @@ const Body = () => {
                     <>
                     <div className="gap-2 w-full flex justify-center mt-5">
                     <button className="border-2 border-[#8df0cc] w-1/2 mx-auto animate-fade-in text-3xl p-2 rounded-4xl bg-[#0d63f8] hover:bg-[#ff0088] cursor-pointer transition-colors font-extrabold"
+                        onClick={handleCreate}
                     >CREATE</button>
                     <button className="border-2 border-[#8df0cc] w-1/2 mx-auto animate-fade-in text-3xl p-2 rounded-4xl bg-[#0d63f8] hover:bg-[#ff0088] cursor-pointer transition-colors font-extrabold"
                     onClick={handleJoinOne}
