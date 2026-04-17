@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom"
 import toast ,{Toaster}from "react-hot-toast"
 import { useAuthStore } from "../utils/authStore"
 const Login = () => {
-    const [userName,setUserName]=useState("")
+    const [userName,setUserName]=useState("dawar")
     const [email,setEmail]=useState("")
-    const [password,setPassword]=useState("")
+    const [password,setPassword]=useState("Dawar@123")
     const [login,setLogin]=useState(true)
     const navigate=useNavigate()
     const setUser=useAuthStore(state=>state.setUser)
@@ -17,13 +17,10 @@ const Login = () => {
             const response=await axios.post(`${apiUrl}/auth/login`,{userName,password},{withCredentials:true})
             
             setUser(response.data.data)
-            toast.success('Welcome Back!',{className:'font-extrabold'})
         }
         else{
             const response=await axios.post(`${apiUrl}/auth/signUp`,{userName,email,password},{withCredentials:true})
             setUser(response.data.data)
-            toast.success('Registration Completed! Welcome!',{className:'font-extrabold'})
-
         }
     navigate("/")}catch (err:any){
             const errorMessage = err.response?.data?.message || "Something went wrong";

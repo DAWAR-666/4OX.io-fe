@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { useAuthStore } from "../utils/authStore"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import AnimatedBackground from "../ui/pathDrawing"
 import Header from "./Header"
 import LoadingDots from "../ui/loadingDots"
@@ -13,6 +13,15 @@ const Body = () => {
     const [join,setJoin]=useState(false)
     const [roomId,setRoomId]=useState("")
     const [loading,setLoading]=useState(false)
+
+    useEffect(()=>{
+        if (!user) {
+        setPlayChoices(false);
+        setJoin(false);
+        setRoomId("");
+        setLoading(false);
+    }
+    },[user])
 
     const handlePlay=()=>{
         if(!user){
@@ -27,12 +36,22 @@ const Body = () => {
         setJoin(true)
     }
     const handleJoinTwo=()=>{
-        if(roomId.length==6){
-            setPlayChoices(false)
-            setJoin(false)
-            setLoading(true)
+        try{
+            if(roomId.length<6){
+                toast.error('INVALID ROOM ID',{className:'font-extrabold'})
+            }else{ 
+                setPlayChoices(false)
+                setJoin(false)
+                setLoading(true)
+            }
+        }catch(err:any){
+            const errorMessage = err.response?.data?.message || "Something went wrong";
+            toast.error(errorMessage,{className:'font-extrabold'})
+        }finally{
+            setLoading(false)
         }
-        toast.error('INVALID ROOM ID',{className:'font-extrabold'})
+        
+        
         
     }
     const handleBack=()=>{
@@ -95,7 +114,7 @@ const Body = () => {
                             autoFocus
                             value={roomId}
                             onChange={(e)=>{setRoomId(e.target.value.toUpperCase())}} 
-                            className="border-2 border-[#8df0cc] focus:outline-none focus:border-[#ff0088] focus:border-2  w-1/2 mx-auto animate-fade-in text-3xl p-2 rounded-4xl bg-[#0d63f8] cursor-pointer font-extrabold"
+                            className="text-center border-2 border-[#8df0cc] focus:outline-none focus:border-[#ff0088] focus:border-2  w-1/2 mx-auto animate-fade-in text-3xl p-3  rounded-4xl bg-[#0d63f8] cursor-pointer font-extrabold"
                         />  
                     </div>
                 }
