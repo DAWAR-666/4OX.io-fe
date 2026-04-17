@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom"
-import { useAuthStore } from "../utils/authStore"
+import { useAuthStore, useRoomStore } from "../utils/authStore"
 import { useEffect, useState } from "react"
 import AnimatedBackground from "../ui/pathDrawing"
 import Header from "./Header"
 import LoadingDots from "../ui/loadingDots"
 import toast from "react-hot-toast"
+import axios from "axios"
 
 const Body = () => {
     const navigate=useNavigate()
@@ -13,6 +14,8 @@ const Body = () => {
     const [join,setJoin]=useState(false)
     const [roomId,setRoomId]=useState("")
     const [loading,setLoading]=useState(false)
+    const apiUrl=import.meta.env.VITE_BASE_URL
+    const setRoom=useRoomStore(state=>state.setRoom)
 
     useEffect(()=>{
         if (!user) {
@@ -35,7 +38,7 @@ const Body = () => {
         setPlayChoices(false)
         setJoin(true)
     }
-    const handleJoinTwo=()=>{
+    const handleJoinTwo=async()=>{
         try{
             if(roomId.length<6){
                 toast.error('INVALID ROOM ID',{className:'font-extrabold'})
@@ -43,12 +46,20 @@ const Body = () => {
                 setPlayChoices(false)
                 setJoin(false)
                 setLoading(true)
+                const response=await axios.post(`${apiUrl}/room/join`,{roomId},{withCredentials:true})
+                setRoom(response.data.data)
+                navigate(`/${roomId}`)
             }
         }catch(err:any){
             const errorMessage = err.response?.data?.message || "Something went wrong";
+            const errStatus=err.status
+            if(errStatus===494){
+                navigate(`/${roomId}`)
+            }
             toast.error(errorMessage,{className:'font-extrabold'})
         }finally{
             setLoading(false)
+            setRoomId("")
         }
         
         
