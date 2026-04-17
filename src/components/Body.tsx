@@ -114,7 +114,7 @@ const Body = () => {
                 }
                 {!(playChoices||join||loading)&&
                 <button 
-                    className="border-2 border-[#8df0cc] w-1/2 mx-auto mt-5 animate-fade-in text-4xl py-2 rounded-4xl bg-[#0d63f8] hover:bg-[#ff0088] cursor-pointer transition-colors font-extrabold"
+                    className="border-2 border-[#8df0cc] w-1/2 mx-auto mt-5 animate-fade-in text-xl md:text-4xl py-2 rounded-4xl bg-[#0d63f8] hover:bg-[#ff0088] cursor-pointer transition-colors  font-['Press_Start_2P']"
                     onClick={handlePlay}
                 >
                     PLAY
@@ -123,12 +123,12 @@ const Body = () => {
                     playChoices &&
                     <>
                     <div className="gap-2 w-full flex justify-center mt-5">
-                    <button className="border-2 border-[#8df0cc] w-1/2 mx-auto animate-fade-in text-3xl p-2 rounded-4xl bg-[#0d63f8] hover:bg-[#ff0088] cursor-pointer transition-colors font-extrabold"
+                    <button className="border-2 border-[#8df0cc] w-1/2 mx-auto animate-fade-in text-md md:text-3xl p-2 rounded-4xl bg-[#0d63f8] hover:bg-[#ff0088] cursor-pointer transition-colors font-['Press_Start_2P'] tracking-tighter"
                         onClick={handleCreate}
-                    >CREATE</button>
-                    <button className="border-2 border-[#8df0cc] w-1/2 mx-auto animate-fade-in text-3xl p-2 rounded-4xl bg-[#0d63f8] hover:bg-[#ff0088] cursor-pointer transition-colors font-extrabold"
+                    >CREATE ROOM</button>
+                    <button className="border-2 border-[#8df0cc] w-1/2 mx-auto animate-fade-in text-md md:text-3xl p-2 rounded-4xl bg-[#0d63f8] hover:bg-[#ff0088] cursor-pointer transition-colors font-['Press_Start_2P'] tracking-tighter"
                     onClick={handleJoinOne}
-                    >JOIN</button>
+                    >JOIN ROOM</button>
                     </div>
                     
                     </>
@@ -136,26 +136,26 @@ const Body = () => {
                 {
                     join &&
                     <div className="mb-2 w-full flex flex-col justify-center mt-5">
-                        <span className="text-center text-[#ff0088] font-extrabold text-4xl">Room Id</span>
+                        <span className="text-center text-[#ff0088] font-['Press_Start_2P'] text-2xl md:text-4xl">Room Id</span>
                         <input 
                             type="text" 
                             maxLength={6}
                             autoFocus
                             value={roomId}
                             onChange={(e)=>{setRoomId(e.target.value.toUpperCase())}} 
-                            className="text-center border-2 border-[#8df0cc] focus:outline-none focus:border-[#ff0088] focus:border-2  w-1/2 mx-auto animate-fade-in text-3xl p-3  rounded-4xl bg-[#0d63f8] cursor-pointer font-extrabold"
+                            className="text-center border-2 border-[#8df0cc] focus:outline-none focus:border-[#ff0088] focus:border-2  w-3/4 mx-auto animate-fade-in text-3xl p-2  rounded-4xl bg-[#0d63f8] cursor-pointer font-extrabold"
                         />  
                     </div>
                 }
                 {
                     (playChoices||join)&&
                     <div className="w-full justify-around flex">
-                        <button className="border-2 border-[#8df0cc] animate-fade-in text-xl p-2 rounded-4xl bg-[#0d63f8] hover:bg-[#ff0088] cursor-pointer transition-colors font-extrabold"
+                        <button className="border-2 border-[#8df0cc] animate-fade-in text-md md:text-xl p-2 rounded-4xl bg-[#0d63f8] hover:bg-[#ff0088] cursor-pointer transition-colors font-extrabold"
                         onClick={handleBack}
                         >BACK</button>
                         {
                         join&&
-                        <button className="border-2 border-[#8df0cc] text-[#8df0cc] animate-fade-in text-xl p-2 rounded-4xl bg-[#0d63f8] hover:bg-[#ff0088] cursor-pointer transition-colors font-extrabold"
+                        <button className="border-2 border-[#8df0cc] text-[#8df0cc] animate-fade-in text-md md:text-xl p-2 rounded-4xl bg-[#0d63f8] hover:bg-[#ff0088] cursor-pointer transition-colors font-extrabold"
                         onClick={handleJoinTwo}
                         >JOIN</button>
                         }
