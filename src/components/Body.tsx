@@ -104,7 +104,7 @@ const Body = () => {
                     4OX.io
                 </span>
                 <span className="text-center text-xl font-black text-[#8df0cc] ">
-                    Tic-Tac-Toe but with only 4 pieces at time
+                    Tic-Tac-Toe but with only 3 pieces at time
                 </span>
                 {
                     loading &&
