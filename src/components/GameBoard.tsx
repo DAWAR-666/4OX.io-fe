@@ -1,19 +1,58 @@
-const GameBoard = ({board}) => {
-  return (
-    <div className="flex justify-center items-center w-screen h-screen">
-    <div className="grid grid-cols-3 grid-rows-3 gap-15 ">
-        <button className="shadow-[10px_10px_10px_0px_#8df0cc] hover:translate-x-2 transition-all hover:translate-y-2 hover:shadow-none border-2 border-[#8df0cc] w-40 h-40 hover:scale-95 flex justify-center items-center text-9xl">{board[0]}</button>
-        <button className="shadow-[0px_10px_10px_0px_#8df0cc] border-2 border-[#8df0cc] transition-all hover:translate-y-1 hover:shadow-none hover:scale-95 flex justify-center items-center text-9xl">{board[1]}</button>
-        <button className="shadow-[-10px_10px_10px_0px_#8df0cc] border-2 border-[#8df0cc] hover:-translate-x-1 transition-all hover:translate-y-1 hover:shadow-none hover:scale-95 flex justify-center items-center text-9xl">{board[2]}</button>
-        <button className="shadow-[10px_0px_10px_0px_#8df0cc] border-2 border-[#8df0cc] hover:translate-x-1 transition-all hover:shadow-none hover:scale-95 flex justify-center items-center text-9xl">{board[3]}</button>
-        <button className="shadow-[0px_0px_10px_2px_#8df0cc] border-2 border-[#8df0cc] hover:scale-95 transition-all hover:shadow-none flex justify-center items-center text-9xl" disabled >{board[4]}</button>
-        <button className="shadow-[-10px_0px_10px_0px_#8df0cc] border-2 border-[#8df0cc] hover:-translate-x-1 transition-all hover:shadow-none hover:scale-95 flex justify-center items-center text-9xl">{board[5]}</button>
-        <button className="shadow-[10px_-10px_10px_0px_#8df0cc] border-2 border-[#8df0cc] hover:translate-x-1 transition-all hover:-translate-y-1 hover:shadow-none hover:scale-95 flex justify-center items-center text-9xl">{board[6]}</button>
-        <button className="shadow-[0px_-10px_10px_0px_#8df0cc] border-2 border-[#8df0cc] transition-all hover:-translate-y-1 hover:shadow-none hover:scale-95 flex justify-center items-center text-9xl">{board[7]}</button>
-        <button className="shadow-[-10px_-10px_10px_0px_#8df0cc] border-2 border-[#8df0cc] hover:-translate-x-1 transition-all hover:-translate-y-1 hover:shadow-none hover:scale-95 flex justify-center items-center text-9xl">{board[8]}</button>
-    </div>
-    </div>
-  )
-}
+const GameBoard = ({ board }) => {
+  // Helper to get the hex code based on the cell value
+  const getColor = (cell) => {
+    if (cell === "X") return "#ff0088";
+    if (cell === "O") return "#0d63f8";
+    return "#8df0cc"; // Default for null
+  };
 
-export default GameBoard
+  const getButtonClass = (isActive, specificStyles, cellColor) => {
+    // We use inline styles for colors because Tailwind doesn't support 
+    // dynamic arbitrary values like shadow-[..._${cellColor}] at runtime easily.
+    const baseClasses = "border-2 w-40 h-40 flex justify-center items-center text-9xl transition-all";
+    const hoverClasses = "hover:scale-95 hover:shadow-none cursor-pointer";
+    
+    return `${baseClasses} ${specificStyles} ${isActive ? hoverClasses : "cursor-not-allowed"}`;
+  };
+
+  return (
+    <div className="flex justify-center items-center w-screen h-screen bg-[#0f172a]">
+      <div className="grid grid-cols-3 grid-rows-3 gap-15">
+        {board.map((cell, index) => {
+          const isActive = cell === null;
+          const cellColor = getColor(cell);
+          
+          // Using CSS variables or dynamic strings for the shadow color
+          const variantStyles = [
+            `shadow-[10px_10px_10px_0px_var(--shadow-col)] ${isActive ? "hover:translate-x-2 hover:translate-y-2" : ""}`,
+            `shadow-[0px_10px_10px_0px_var(--shadow-col)] ${isActive ? "hover:translate-y-1" : ""}`,
+            `shadow-[-10px_10px_10px_0px_var(--shadow-col)] ${isActive ? "hover:-translate-x-1 hover:translate-y-1" : ""}`,
+            `shadow-[10px_0px_10px_0px_var(--shadow-col)] ${isActive ? "hover:translate-x-1" : ""}`,
+            `shadow-[0px_0px_10px_2px_var(--shadow-col)]`,
+            `shadow-[-10px_0px_10px_0px_var(--shadow-col)] ${isActive ? "hover:-translate-x-1" : ""}`,
+            `shadow-[10px_-10px_10px_0px_var(--shadow-col)] ${isActive ? "hover:translate-x-1 hover:-translate-y-1" : ""}`,
+            `shadow-[0px_-10px_10px_0px_var(--shadow-col)] ${isActive ? "hover:-translate-y-1" : ""}`,
+            `shadow-[-10px_-10px_10px_0px_var(--shadow-col)] ${isActive ? "hover:-translate-x-1 hover:-translate-y-1" : ""}`,
+          ];
+
+          return (
+            <button
+              key={index}
+              disabled={!isActive}
+              className={getButtonClass(isActive, variantStyles[index], cellColor)}
+              style={{ 
+                borderColor: cellColor, 
+                color: cellColor,
+                '--shadow-col': cellColor // Custom property for the Tailwind shadow bracket
+              }}
+            >
+              {cell}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default GameBoard;
