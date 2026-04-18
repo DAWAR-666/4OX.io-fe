@@ -4,6 +4,7 @@ import { useEffect } from "react"
 import { useAuthStore } from "./utils/authStore"
 import axios from "axios"
 import Login from "./components/Login"
+import GamePage from "./components/GamePage"
 
 const App = () => {
   const setUser=useAuthStore(state=>state.setUser)
@@ -24,6 +25,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Body/>}/>
           <Route path="/login" element={<Login/>}/>
+          <Route path="/:roomId" element ={<GamePage/>}/>
         </Routes>  
       </BrowserRouter>
     </div>
