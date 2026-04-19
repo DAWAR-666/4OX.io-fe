@@ -1,12 +1,12 @@
-const GameBoard = ({ board }) => {
+const GameBoard = ({ board }:{board:Array<string|null>}) => {
   // Helper to get the hex code based on the cell value
-  const getColor = (cell) => {
+  const getColor = (cell:string|null) => {
     if (cell === "X") return "#ff0088";
     if (cell === "O") return "#0d63f8";
     return "#8df0cc"; // Default for null
   };
 
-  const getButtonClass = (isActive, specificStyles, cellColor) => {
+  const getButtonClass = (isActive:boolean, specificStyles:string) => {
     // We use inline styles for colors because Tailwind doesn't support 
     // dynamic arbitrary values like shadow-[..._${cellColor}] at runtime easily.
     const baseClasses = "border-2 w-40 h-40 flex justify-center items-center text-9xl transition-all";
@@ -18,7 +18,7 @@ const GameBoard = ({ board }) => {
   return (
     <div className="flex justify-center items-center w-screen h-screen bg-[#0f172a]">
       <div className="grid grid-cols-3 grid-rows-3 gap-15">
-        {board.map((cell, index) => {
+        {board.map((cell:string|null, index:number) => {
           const isActive = cell === null;
           const cellColor = getColor(cell);
           
@@ -39,12 +39,12 @@ const GameBoard = ({ board }) => {
             <button
               key={index}
               disabled={!isActive}
-              className={getButtonClass(isActive, variantStyles[index], cellColor)}
+              className={getButtonClass(isActive, variantStyles[index])}
               style={{ 
                 borderColor: cellColor, 
                 color: cellColor,
                 '--shadow-col': cellColor // Custom property for the Tailwind shadow bracket
-              }}
+              }as React.CSSProperties}
             >
               {cell}
             </button>
