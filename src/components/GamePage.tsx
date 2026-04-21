@@ -1,9 +1,12 @@
 import { useParams } from "react-router-dom"
 import GameBoard from "./GameBoard"
+import { useAuthStore } from "../utils/authStore"
+import { useState } from "react"
 
 const GamePage = () => {
     const {roomId}=useParams()
-    const board:Array<string|null>=[null,null,null,null,"X","X","O","O",null]
+    const user=useAuthStore(state=>state.user)
+    const [gameState,setGameState]=useState(null)
   return (
     <div className="bg-black min-h-screen w-screen text-white">
         <header className="fixed border-b-8 border-double border-zinc-600 w-full flex justify-between font-['Press_Start_2P'] text-sm md:text-xl">
