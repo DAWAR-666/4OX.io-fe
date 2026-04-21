@@ -40,15 +40,34 @@ const GamePage = () => {
             socket.disconnect()
         }
     },[])
+    const myTurn=gameState?.currentTurn===socket.id
+    const me=gameState?.players.find(p=>p.socketId===socket.id)
+    const opponent=gameState?.players.find(p=>p.socketId!==socket.id)
+    const handleMove=(cellIndex:number)=>{
+        if(!gameState){
+            return
+        }
+        if(gameState.status!=='playing')return
+        if(socket.id!==gameState?.currentTurn)return
+        if(gameState?.board[cellIndex]!==null)return
+        socket.emit('gameMove',{roomId,cellIndex})
+    }
   return (
     <div className="bg-black min-h-screen w-screen text-white">
         <header className="fixed border-b-8 border-double border-zinc-600 w-full flex justify-between font-['Press_Start_2P'] text-sm md:text-xl">
-            <div className="bg-[#ff0088]/50 w-1/3 text-center border-r-8 border-[#8df0cc] ">player1</div>
-            <div className="w-1/3 text-center">player's turn</div>
-            <div className="bg-[#0d63f8]/50 w-1/3 text-center border-l-8 border-[#8df0cc]">player2</div>
+            <div className="bg-[#ff0088]/50 w-1/3 text-center border-r-8 border-[#8df0cc] ">{me?.userName}</div>
+            <div className="w-1/3 text-center">{myTurn?"Your Turn":"Opponent's turn"}</div>
+            <div className="bg-[#0d63f8]/50 w-1/3 text-center border-l-8 border-[#8df0cc]">{opponent?.userName??'waiting.....'}</div>
         </header>
         <div className="flex justify-center items-center">
-            <GameBoard board={board}/>
+            <GameBoard 
+                board={gameState?.board??Array(9).fill(null)}
+                onMove={handleMove}
+                myTurn={myTurn ?? false}
+                disappearingCellIndex={
+                    me?.queue.length === 3 ? me.queue[0].cellIndex : null
+                }
+            />
         </div>
         <footer className="fixed flex flex-row md:text-xl justify-around bottom-0 w-full p-2 font-['Press_Start_2P'] text-rose-400">
              Room Id -- {roomId} 
