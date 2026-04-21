@@ -32,6 +32,13 @@ const GamePage = () => {
         socket.on('error',(message:string)=>{
             toast.error(message, { className: 'font-extrabold' })
         })
+        return ()=>{
+            socket.off('gameState')
+            socket.off('gameOver')
+            socket.off('opponentLeft')
+            socket.off('error')
+            socket.disconnect()
+        }
     },[])
   return (
     <div className="bg-black min-h-screen w-screen text-white">
