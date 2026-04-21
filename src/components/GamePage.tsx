@@ -17,9 +17,10 @@ const GamePage = () => {
             return
         }
         socket.connect()
-        socket.emit("joinRoom",roomId,user._id)
+
 
         socket.on("gameState",(state:Game)=>{
+            console.log("gameState received:", state)
             setGameState(state)
         })
         socket.on("gameOver",({winner}:{winner:Player})=>{
@@ -32,6 +33,7 @@ const GamePage = () => {
         socket.on('error',(message:string)=>{
             toast.error(message, { className: 'font-extrabold' })
         })
+        socket.emit("joinRoom",roomId,user._id)
         return ()=>{
             socket.off('gameState')
             socket.off('gameOver')
@@ -55,7 +57,7 @@ const GamePage = () => {
   return (
     <div className="bg-black min-h-screen w-screen text-white">
         <header className="fixed border-b-8 border-double border-zinc-600 w-full flex justify-between font-['Press_Start_2P'] text-sm md:text-xl">
-            <div className="bg-[#ff0088]/50 w-1/3 text-center border-r-8 border-[#8df0cc] ">{me?.userName}</div>
+            <div className="bg-[#ff0088]/50 w-1/3 text-center border-r-8 border-[#8df0cc] ">{me?.userName ?? user?.userName}</div>
             <div className="w-1/3 text-center">{myTurn?"Your Turn":"Opponent's turn"}</div>
             <div className="bg-[#0d63f8]/50 w-1/3 text-center border-l-8 border-[#8df0cc]">{opponent?.userName??'waiting.....'}</div>
         </header>

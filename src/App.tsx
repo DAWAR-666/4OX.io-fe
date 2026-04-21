@@ -12,7 +12,7 @@ const App = () => {
   const fetchUser=async()=>{
     if(!loggedinUser){
       const apiUrl = import.meta.env.VITE_BASE_URL;
-      const user=await axios.get(`${apiUrl}/user/profile`,{withCredentials:true})
+      const user=await axios.get(`${apiUrl}user/profile`,{withCredentials:true})
       setUser(user.data.data.safeUser)
     }    
   }

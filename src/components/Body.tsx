@@ -46,7 +46,7 @@ const Body = () => {
                 setPlayChoices(false)
                 setJoin(false)
                 setLoading(true)
-                const response=await axios.post(`${apiUrl}/room/join`,{roomId},{withCredentials:true})
+                const response=await axios.post(`${apiUrl}room/join`,{roomId},{withCredentials:true})
                 setRoom(response.data.data)
                 navigate(`/${roomId}`)
                 toast.success('Room Joined')
@@ -81,7 +81,7 @@ const Body = () => {
         try{
             setPlayChoices(false)
             setLoading(true)
-            const response=await axios.post(`${apiUrl}/room/create`,{},{withCredentials:true})
+            const response=await axios.post(`${apiUrl}room/create`,{},{withCredentials:true})
             setRoom(response.data.data)
             const roomId=response.data.data.roomId
             navigate(`/${roomId}`)

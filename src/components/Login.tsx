@@ -14,12 +14,12 @@ const Login = () => {
         const apiUrl=import.meta.env.VITE_BASE_URL
         try{if(login){
             
-            const response=await axios.post(`${apiUrl}/auth/login`,{userName,password},{withCredentials:true})
+            const response=await axios.post(`${apiUrl}auth/login`,{userName,password},{withCredentials:true})
             
             setUser(response.data.data)
         }
         else{
-            const response=await axios.post(`${apiUrl}/auth/signUp`,{userName,email,password},{withCredentials:true})
+            const response=await axios.post(`${apiUrl}auth/signUp`,{userName,email,password},{withCredentials:true})
             setUser(response.data.data)
         }
     navigate("/")}catch (err:any){

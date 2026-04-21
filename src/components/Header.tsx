@@ -10,7 +10,7 @@ const Header = () => {
     const handleLogout = async () => {
         setUser(null)
         try {
-            await axios.post(`${apiUrl}/auth/logout`, {}, { withCredentials: true })
+            await axios.post(`${apiUrl}auth/logout`, {}, { withCredentials: true })
         } catch (error: any) {
             toast.error(error.response.data.message)
         }
