@@ -1,0 +1,19 @@
+export type piece={
+    id:string,
+    cellIndex:number
+}
+export type Player={
+    id:string|null,
+    socketId:string,
+    userName:string|null,
+    symbol:"X"|"O",
+    queue:piece[]
+}
+export type Game={
+    board:(string|null)[],
+    players:Player[],
+    currentTurn:string,
+    status:"waiting"|"playing"|"finished",
+    winner:string|null,
+    dissappearingPcs:string|null
+}
