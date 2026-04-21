@@ -1,12 +1,38 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import GameBoard from "./GameBoard"
 import { useAuthStore } from "../utils/authStore"
-import { useState } from "react"
-
+import { useEffect, useState } from "react"
+import type { Game, Player } from "../utils/types"
+import socket from "../utils/sockets"
+import toast from "react-hot-toast"
 const GamePage = () => {
     const {roomId}=useParams()
     const user=useAuthStore(state=>state.user)
-    const [gameState,setGameState]=useState(null)
+    const navigate=useNavigate()
+    const [gameState,setGameState]=useState<Game|null>(null)
+    const [winner,setWinner]=useState<string|null>(null)
+    useEffect(()=>{
+        if(!user||!roomId){
+            navigate('/')
+            return
+        }
+        socket.connect()
+        socket.emit("joinRoom",roomId,user._id)
+
+        socket.on("gameState",(state:Game)=>{
+            setGameState(state)
+        })
+        socket.on("gameOver",({winner}:{winner:Player})=>{
+            setWinner(winner.userName)
+        })
+        socket.on("opponentLeft",()=>{
+            toast.error('Opponent Left!',{className:'font-extrabold'})
+            setWinner('opponentLeft')
+        })
+        socket.on('error',(message:string)=>{
+            toast.error(message, { className: 'font-extrabold' })
+        })
+    },[])
   return (
     <div className="bg-black min-h-screen w-screen text-white">
         <header className="fixed border-b-8 border-double border-zinc-600 w-full flex justify-between font-['Press_Start_2P'] text-sm md:text-xl">
