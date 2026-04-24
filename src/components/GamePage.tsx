@@ -20,7 +20,6 @@ const GamePage = () => {
 
 
         socket.on("gameState",(state:Game)=>{
-            console.log("gameState received:", state)
             setGameState(state)
         })
         socket.on("gameOver",({winner}:{winner:Player})=>{
