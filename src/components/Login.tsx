@@ -31,8 +31,8 @@ const Login = () => {
   return (
     <div className="bg-black min-h-screen w-screen font-bold border-10 text-white flex justify-center items-center">
         <Toaster position='top-center'/>
-        <form className="flex flex-col gap-3 w-1/3">
-            <div className="text-center text-5xl">
+        <form className="flex flex-col gap-3 w-1/2 md:w-1/4">
+            <div className="text-center text-3xl md:text-5xl">
                 {login?'Sign in':'Sign up'}
             </div>
             <span>UserName</span>
@@ -42,6 +42,7 @@ const Login = () => {
                 placeholder="Enter UserName" 
                 value={userName} 
                 onChange={(e)=>{setUserName(e.target.value)}}
+                className="border-2 rounded-full p-1"
             />
             {!login&&
             <>
@@ -52,6 +53,7 @@ const Login = () => {
                 placeholder="Enter Email" 
                 value={email} 
                 onChange={(e)=>{setEmail(e.target.value)}}
+                className="border-2 rounded-full p-1"
             /></>}
             <span>Password</span>
             <input 
@@ -60,9 +62,16 @@ const Login = () => {
                 placeholder="Enter Password" 
                 value={password} 
                 onChange={(e)=>{setPassword(e.target.value)}}
+                className="border-2 rounded-full p-1"
             />
 
-                <button type="button" onClick={handleLogin}>{login?'Sign In':'Sign Up'}</button>
+                <button 
+                    type="button" 
+                    onClick={handleLogin} 
+                    className="bg-[#ff0088] rounded-full font-['Press_Start_2P'] hover:bg-[#8df0cc] transition-all hover:text-[#ff0088]"
+                >
+                    {login?'Sign In':'Sign Up'}
+                </button>
                 <span onClick={()=>setLogin(!login)}>{login?'dont have an account? Sign up':'already registered? Sign in'}</span>
         </form>
         
