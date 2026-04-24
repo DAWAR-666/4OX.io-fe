@@ -15,7 +15,7 @@ const GameBoard = ({ board, onMove, myTurn, disappearingCellIndex }: Props) => {
   const getButtonClass = (isActive:boolean, specificStyles:string,isDisappearing:boolean) => {
     // We use inline styles for colors because Tailwind doesn't support 
     // dynamic arbitrary values like shadow-[..._${cellColor}] at runtime easily.
-    const baseClasses = "border-2 w-40 h-40 flex justify-center items-center text-9xl transition-all";
+    const baseClasses = "border-2 w-20 h-20 md:w-40 md:h-40 flex justify-center items-center text-7xl md:text-9xl transition-all";
     const hoverClasses = "hover:scale-95 hover:shadow-none cursor-pointer";
     const disappearClass = isDisappearing ? "opacity-30 animate-pulse" : ""
     return `${baseClasses} ${specificStyles} ${isActive ? hoverClasses : "cursor-not-allowed"} ${disappearClass}`;
@@ -23,7 +23,7 @@ const GameBoard = ({ board, onMove, myTurn, disappearingCellIndex }: Props) => {
 
   return (
     <div className="flex justify-center items-center w-screen h-screen bg-[#0f172a]">
-      <div className="grid grid-cols-3 grid-rows-3 gap-15">
+      <div className="grid grid-cols-3 grid-rows-3 gap-10 md:gap-15">
         {board.map((cell:string|null, index:number) => {
           const isActive = cell === null&&myTurn;
           const cellColor = getColor(cell);

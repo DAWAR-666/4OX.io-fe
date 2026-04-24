@@ -54,12 +54,33 @@ const GamePage = () => {
         if(gameState?.board[cellIndex]!==null)return
         socket.emit('gameMove',{roomId,cellIndex})
     }
-    if (gameState?.status === 'finished') {
+    if (!gameState || gameState.status === 'waiting') {
+  return (
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center gap-6">
+      <span className="font-['Press_Start_2P'] text-[#8df0cc] text-2xl">
+        ROOM: {roomId}
+      </span>
+      <span className="font-['Press_Start_2P'] text-white text-sm">
+        Waiting for opponent...
+      </span>
+      <button
+        onClick={() => {
+          navigator.clipboard.writeText(roomId!)
+          toast.success('Copied!', { className: 'font-extrabold' })
+        }}
+        className="border-2 border-[#8df0cc] px-8 py-3 rounded-4xl bg-[#0d63f8] hover:bg-[#ff0088] text-white font-extrabold transition-colors cursor-pointer"
+      >
+        COPY CODE
+      </button>
+    </div>
+  )
+}
+    if (gameState?.status === 'finished' ||winner==='opponentLeft') {
   const iWon = winner === user?.userName
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center gap-8">
       <span className="font-['Press_Start_2P'] text-3xl md:text-6xl text-[#8df0cc]">
-        {winner === 'opponent_left'
+        {winner === 'opponentLeft'
           ? 'OPPONENT LEFT!'
           : iWon ? 'YOU WIN!' : 'YOU LOSE!'}
       </span>
@@ -73,13 +94,14 @@ const GamePage = () => {
   )
 }
 
-const playerbg=me?.symbol==="X"?"bg-[#ff0088]/50":"bg-[#0d63f8]/50"
-  return (
+const mybg=me?.symbol==="X" ? "bg-[#ff0088]/50" : "bg-[#0d63f8]/50"
+const enemyBG = opponent?.symbol === "O" ? "bg-[#0d63f8]/50" : "bg-[#ff0088]/50"
+return (
     <div className="bg-black min-h-screen w-screen text-white">
-        <header className="fixed border-b-8 border-double border-zinc-600 w-full flex justify-between font-['Press_Start_2P'] text-sm md:text-xl">
-            <div className={`${playerbg}w-1/3 text-center border-r-8 border-[#8df0cc]`}>{me?.userName ?? user?.userName}</div>
+        <header className="fixed border-b-8 border-double border-zinc-600 w-full flex justify-between font-['Press_Start_2P'] text-sm md:text-xl ">
+            <div className={`${mybg} w-1/3 text-center border-r-8 border-[#8df0cc]`}>{me?.userName ?? user?.userName}</div>
             <div className="w-1/3 text-center">{myTurn?"Your Turn":"Opponent's turn"}</div>
-            <div className={`${playerbg} w-1/3 text-center border-l-8 border-[#8df0cc]`}>{opponent?.userName??'waiting.....'}</div>
+            <div className={`${enemyBG} w-1/3 text-center border-l-8 border-[#8df0cc]`}>{opponent?.userName??'waiting.....'}</div>
         </header>
         <div className="flex justify-center items-center">
             <GameBoard 
