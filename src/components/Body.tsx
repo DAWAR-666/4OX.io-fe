@@ -96,10 +96,10 @@ const Body = () => {
     }
     return (
     
-    <div className="bg-black/70 w-screen min-h-screen overflow-hidden ">
+    <div className="bg-black/70 w-screen min-h-100vh overflow-hidden ">
         <AnimatedBackground/>
         {user&&<Header/>}
-        <div className="h-screen flex justify-center items-center z-1 ">
+        <div className="h-100vh flex justify-center items-center z-1 ">
             <div className="flex flex-col bg-black/50 text-white p-30">
                 <span className="text-7xl md:text-8xl lg:text-9xl text-center font-extrabold animate-fade-in ">
                     4OX.io
