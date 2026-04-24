@@ -6,6 +6,7 @@ import Header from "./Header"
 import LoadingDots from "../ui/loadingDots"
 import toast from "react-hot-toast"
 import axios from "axios"
+import FloatingDockDemo from "./floating-dock-demo"
 
 const Body = () => {
     const navigate=useNavigate()
@@ -164,6 +165,7 @@ const Body = () => {
             </div>
             
         </div>
+        <div className="fixed bottom-0 w-full  "><FloatingDockDemo/></div>
     </div>
   )
 }
