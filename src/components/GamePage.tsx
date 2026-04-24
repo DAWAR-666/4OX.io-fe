@@ -54,12 +54,32 @@ const GamePage = () => {
         if(gameState?.board[cellIndex]!==null)return
         socket.emit('gameMove',{roomId,cellIndex})
     }
+    if (gameState?.status === 'finished') {
+  const iWon = winner === user?.userName
+  return (
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center gap-8">
+      <span className="font-['Press_Start_2P'] text-3xl md:text-6xl text-[#8df0cc]">
+        {winner === 'opponent_left'
+          ? 'OPPONENT LEFT!'
+          : iWon ? 'YOU WIN!' : 'YOU LOSE!'}
+      </span>
+      <button
+        onClick={() => navigate('/')}
+        className="border-2 border-[#8df0cc] px-8 py-3 rounded-4xl bg-[#0d63f8] hover:bg-[#ff0088] text-white font-extrabold transition-colors cursor-pointer"
+      >
+        BACK TO HOME
+      </button>
+    </div>
+  )
+}
+
+const playerbg=me?.symbol==="X"?"bg-[#ff0088]/50":"bg-[#0d63f8]/50"
   return (
     <div className="bg-black min-h-screen w-screen text-white">
         <header className="fixed border-b-8 border-double border-zinc-600 w-full flex justify-between font-['Press_Start_2P'] text-sm md:text-xl">
-            <div className="bg-[#ff0088]/50 w-1/3 text-center border-r-8 border-[#8df0cc] ">{me?.userName ?? user?.userName}</div>
+            <div className={`${playerbg}w-1/3 text-center border-r-8 border-[#8df0cc]`}>{me?.userName ?? user?.userName}</div>
             <div className="w-1/3 text-center">{myTurn?"Your Turn":"Opponent's turn"}</div>
-            <div className="bg-[#0d63f8]/50 w-1/3 text-center border-l-8 border-[#8df0cc]">{opponent?.userName??'waiting.....'}</div>
+            <div className={`${playerbg} w-1/3 text-center border-l-8 border-[#8df0cc]`}>{opponent?.userName??'waiting.....'}</div>
         </header>
         <div className="flex justify-center items-center">
             <GameBoard 
