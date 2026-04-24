@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom"
 import GameBoard from "./GameBoard"
 import { useAuthStore } from "../utils/authStore"
-import axios from "axios"
 import { useEffect, useState } from "react"
 import type { Game, Player } from "../utils/types"
 import socket from "../utils/sockets"
@@ -9,7 +8,6 @@ import toast from "react-hot-toast"
 const GamePage = () => {
     const {roomId}=useParams()
     const user=useAuthStore(state=>state.user)
-    const setUser=useAuthStore(state=>state.setUser)
     const navigate=useNavigate()
     const [gameState,setGameState]=useState<Game|null>(null)
     const [winner,setWinner]=useState<string|null>(null)
@@ -24,17 +22,8 @@ const GamePage = () => {
         socket.on("gameState",(state:Game)=>{
             setGameState(state)
         })
-        socket.on("gameOver",async({winner}:{winner:Player})=>{
+        socket.on("gameOver",({winner}:{winner:Player})=>{
             setWinner(winner.userName)
-            try {
-    const apiUrl = import.meta.env.VITE_BASE_URL
-    const response = await axios.get(`${apiUrl}/user/profile`, {
-      withCredentials: true
-    })
-    setUser(response.data.data.safeUser)  // ← update Zustand with fresh stats
-  } catch (err) {
-    console.error("Failed to update stats", err)
-  }
         })
         socket.on("opponentLeft",()=>{
             toast.error('Opponent Left!',{className:'font-extrabold'})
@@ -66,7 +55,7 @@ const GamePage = () => {
     }
     if (!gameState || gameState.status === 'waiting') {
   return (
-    <div className="min-h-100vh bg-black flex flex-col items-center justify-center gap-6">
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center gap-6">
       <span className="font-['Press_Start_2P'] text-[#8df0cc] text-2xl">
         ROOM: {roomId}
       </span>
@@ -88,7 +77,7 @@ const GamePage = () => {
     if (gameState?.status === 'finished' ||winner==='opponentLeft') {
   const iWon = winner === user?.userName
   return (
-    <div className="min-h-100vh bg-black flex flex-col items-center justify-center gap-8">
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center gap-8">
       <span className="font-['Press_Start_2P'] text-3xl md:text-6xl text-[#8df0cc]">
         {winner === 'opponentLeft'
           ? 'OPPONENT LEFT!'
@@ -107,7 +96,7 @@ const GamePage = () => {
 const mybg=me?.symbol==="X" ? "bg-[#ff0088]/50" : "bg-[#0d63f8]/50"
 const enemyBG = opponent?.symbol === "O" ? "bg-[#0d63f8]/50" : "bg-[#ff0088]/50"
 return (
-    <div className="bg-black min-h-100vh w-screen text-white">
+    <div className="bg-black min-h-screen w-screen text-white">
         <header className="fixed border-b-8 border-double border-zinc-600 w-full flex justify-between font-['Press_Start_2P'] text-sm md:text-xl ">
             <div className={`${mybg} w-1/3 text-center border-r-8 border-[#8df0cc]`}>{me?.userName ?? user?.userName}</div>
             <div className="w-1/3 text-center">{myTurn?"Your Turn":"Opponent's turn"}</div>

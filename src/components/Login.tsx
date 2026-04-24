@@ -29,7 +29,7 @@ const Login = () => {
         
     }
   return (
-    <div className="bg-black min-h-100vh w-screen font-bold border-10 text-white flex justify-center items-center">
+    <div className="bg-black min-h-screen w-screen font-bold border-10 text-white flex justify-center items-center">
         <Toaster position='top-center'/>
         <form className="flex flex-col gap-3 w-1/2 md:w-1/4">
             <div className="text-center text-3xl md:text-5xl">

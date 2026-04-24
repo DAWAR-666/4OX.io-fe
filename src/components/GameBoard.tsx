@@ -22,7 +22,7 @@ const GameBoard = ({ board, onMove, myTurn, disappearingCellIndex }: Props) => {
   };
 
   return (
-    <div className="flex justify-center items-center w-screen h-100vh bg-[#0f172a]">
+    <div className="flex justify-center items-center w-screen h-screen bg-[#0f172a]">
       <div className="grid grid-cols-3 grid-rows-3 gap-10 md:gap-15">
         {board.map((cell:string|null, index:number) => {
           const isActive = cell === null&&myTurn;
