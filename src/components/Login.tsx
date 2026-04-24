@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom"
 import toast ,{Toaster}from "react-hot-toast"
 import { useAuthStore } from "../utils/authStore"
 const Login = () => {
-    const [userName,setUserName]=useState("dawar")
+    const [userName,setUserName]=useState("")
     const [email,setEmail]=useState("")
-    const [password,setPassword]=useState("Dawar@123")
+    const [password,setPassword]=useState("")
     const [login,setLogin]=useState(true)
     const navigate=useNavigate()
     const setUser=useAuthStore(state=>state.setUser)
