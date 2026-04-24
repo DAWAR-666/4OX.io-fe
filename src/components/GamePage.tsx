@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom"
 import GameBoard from "./GameBoard"
+import axios from "axios"
 import { useAuthStore } from "../utils/authStore"
 import { useEffect, useState } from "react"
 import type { Game, Player } from "../utils/types"
@@ -8,6 +9,7 @@ import toast from "react-hot-toast"
 const GamePage = () => {
     const {roomId}=useParams()
     const user=useAuthStore(state=>state.user)
+    const setUser=useAuthStore(state=>state.setUser)
     const navigate=useNavigate()
     const [gameState,setGameState]=useState<Game|null>(null)
     const [winner,setWinner]=useState<string|null>(null)
@@ -22,8 +24,17 @@ const GamePage = () => {
         socket.on("gameState",(state:Game)=>{
             setGameState(state)
         })
-        socket.on("gameOver",({winner}:{winner:Player})=>{
+        socket.on("gameOver",async({winner}:{winner:Player})=>{
             setWinner(winner.userName)
+            try {
+    const apiUrl = import.meta.env.VITE_BASE_URL
+    const response = await axios.get(`${apiUrl}/user/profile`, {
+      withCredentials: true
+    })
+    setUser(response.data.data.safeUser)  // ← update Zustand with fresh stats
+  } catch (err) {
+    console.error("Failed to update stats", err)
+  }
         })
         socket.on("opponentLeft",()=>{
             toast.error('Opponent Left!',{className:'font-extrabold'})
