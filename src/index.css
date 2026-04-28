@@ -13,6 +13,20 @@
 .animate-fade-in {
   animation: fade-in 3s ease-out forwards;
 }
+@keyframes border-run {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.neon-border {
+  /* This creates a gradient border using background-clip */
+  border: 10px solid transparent;
+  background: linear-gradient(black, black) padding-box, 
+              linear-gradient(90deg, #ff0088, #0d63f8, #8df0cc, #ff0088) border-box;
+  background-size: 300% 300%;
+  animation: border-run 4s linear infinite;
+}
 :root {
   --font-press-start: "Press Start 2P", system-ui;
   --background: oklch(1 0 0);

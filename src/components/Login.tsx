@@ -29,40 +29,40 @@ const Login = () => {
         
     }
   return (
-    <div className="bg-black min-h-screen w-screen font-bold border-10 text-white flex  justify-center items-center">
+    <div className="bg-black min-h-screen w-screen font-bold neon-border text-white flex  justify-center items-center">
         <Toaster position='top-center'/>
         <form className="flex flex-col animate-fade-in gap-3 w-1/2 md:w-1/4">
-            <div className="text-center text-3xl md:text-5xl font-['Press_Start_2p'] text-[#8df0cc]">
+            <div className="text-center text-2xl tracking-tighter md:text-4xl font-['Press_Start_2p'] text-[#8df0cc]">
                 {login?'Sign in':'Sign up'}
             </div>
-            <span className="font-['Press_Start_2p'] text-[#0d63f8]">UserName</span>
+            <span className="font-['Press_Start_2p'] text-md tracking-tighter text-[#0d63f8]">UserName</span>
             <input 
                 required
                 type="text" 
                 placeholder="Enter UserName" 
                 value={userName} 
                 onChange={(e)=>{setUserName(e.target.value)}}
-                className="border-b-2 border-[#ff0088] text-center focus:outline-none p-1"
+                className="border-b-2 border-[#ff0088] text-center focus:outline-none p-1 text-lg"
             />
             {!login&&
             <>
-            <span className="font-['Press_Start_2p'] text-[#0d63f8]">Email</span>
+            <span className="font-['Press_Start_2p'] text-md tracking-tighter text-[#0d63f8]">Email</span>
             <input 
                 required
                 type="email" 
                 placeholder="Enter Email" 
                 value={email} 
                 onChange={(e)=>{setEmail(e.target.value)}}
-                className="border-b-2 text-center focus:outline-none p-1 border-[#ff0088]"
+                className="border-b-2 text-center focus:outline-none p-1 border-[#ff0088] text-lg"
             /></>}
-            <span className="font-['Press_Start_2p'] text-[#0d63f8]">Password</span>
+            <span className="font-['Press_Start_2p'] text-md tracking-tighter text-[#0d63f8]">Password</span>
             <input 
                 required
                 type="password" 
                 placeholder="Enter Password" 
                 value={password} 
                 onChange={(e)=>{setPassword(e.target.value)}}
-                className="border-b-2 text-center focus:outline-none p-1 border-[#ff0088]"
+                className="border-b-2 text-center focus:outline-none p-1 border-[#ff0088] text-lg"
             />
 
                 <button 
