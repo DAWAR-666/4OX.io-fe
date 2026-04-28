@@ -29,40 +29,40 @@ const Login = () => {
         
     }
   return (
-    <div className="bg-black min-h-screen w-screen font-bold border-10 text-white flex justify-center items-center">
+    <div className="bg-black min-h-screen w-screen font-bold border-10 text-white flex  justify-center items-center">
         <Toaster position='top-center'/>
-        <form className="flex flex-col gap-3 w-1/2 md:w-1/4">
-            <div className="text-center text-3xl md:text-5xl">
+        <form className="flex flex-col animate-fade-in gap-3 w-1/2 md:w-1/4">
+            <div className="text-center text-3xl md:text-5xl font-['Press_Start_2p'] text-[#8df0cc]">
                 {login?'Sign in':'Sign up'}
             </div>
-            <span>UserName</span>
+            <span className="font-['Press_Start_2p'] text-[#0d63f8]">UserName</span>
             <input 
                 required
                 type="text" 
                 placeholder="Enter UserName" 
                 value={userName} 
                 onChange={(e)=>{setUserName(e.target.value)}}
-                className="border-2 rounded-full p-1"
+                className="border-b-2 border-[#ff0088] text-center focus:outline-none p-1"
             />
             {!login&&
             <>
-            <span>Email</span>
+            <span className="font-['Press_Start_2p'] text-[#0d63f8]">Email</span>
             <input 
                 required
                 type="email" 
                 placeholder="Enter Email" 
                 value={email} 
                 onChange={(e)=>{setEmail(e.target.value)}}
-                className="border-2 rounded-full p-1"
+                className="border-b-2 text-center focus:outline-none p-1 border-[#ff0088]"
             /></>}
-            <span>Password</span>
+            <span className="font-['Press_Start_2p'] text-[#0d63f8]">Password</span>
             <input 
                 required
                 type="password" 
                 placeholder="Enter Password" 
                 value={password} 
                 onChange={(e)=>{setPassword(e.target.value)}}
-                className="border-2 rounded-full p-1"
+                className="border-b-2 text-center focus:outline-none p-1 border-[#ff0088]"
             />
 
                 <button 
@@ -72,7 +72,9 @@ const Login = () => {
                 >
                     {login?'Sign In':'Sign Up'}
                 </button>
-                <span onClick={()=>setLogin(!login)}>{login?'dont have an account? Sign up':'already registered? Sign in'}</span>
+                <span 
+                    className='text-center text-[#8df0cc]' 
+                    onClick={()=>setLogin(!login)}>{login?'dont have an account? Sign up':'already registered? Sign in'}</span>
         </form>
         
     </div>
